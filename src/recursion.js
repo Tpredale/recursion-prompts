@@ -4,7 +4,18 @@
 // denoted by n!, is the product of all positive integers less than or equal to n.
 // Example:  5! = 5 x 4 x 3 x 2 x 1 = 120
 // factorial(5);  // 120
+//Base Case if n is equal to 0 we will return 1
+  //if n is equal to 1 we will return 1.
+//Recursive Case - We want n * n-1 until we reach n = 0.
 var factorial = function(n) {
+  if(n === 0){
+    return 1;
+  }
+  if(n < 0){
+    return null;
+  }
+    return n * factorial(n-1);
+  
 };
 
 // 2. Compute the sum of an array of integers.
@@ -18,37 +29,140 @@ var arraySum = function(array) {
 };
 
 // 4. Check if a number is even.
+//Base Case - if n is 0,1, or 2.
+//Recursive Case - Subtract 2 from n on each function call for positive integers until
+  //n equals one of our base cases. For negative integers we will add two.
 var isEven = function(n) {
+  if(n === 0){
+    return true;
+  }
+  if(n === 1){
+    return false;
+  }
+  if(n === 2){
+    return true;
+  }
+  if(n < 0){
+    return isEven(n+2);
+  }else{
+    return isEven(n-2);
+  }
+
 };
 
 // 5. Sum all integers below a given integer.
 // sumBelow(10); // 45
-// sumBelow(7); // 21
+// sumBelow(7); // 21**
+//Base Case sumBelow(0) = 0 
+//Recursive Case  - calling sumBelow until n = 0
+//Action - We need n to get to 0. 
 var sumBelow = function(n) {
+  if(n === 0){
+    return 0;
+  }
+  if(n === 1){
+    return 0;
+  }
+  if(n === -1){
+    return 0;
+  }
+  if(n > 1){
+    return (n-1) + sumBelow(n-1);
+  }
+  if(n < 1){
+    return (n+1) + sumBelow(n+1);
+  }
+
 };
 
 // 6. Get the integers in range (x, y).
 // Example:  range(2, 9);  // [3, 4, 5, 6, 7, 8]
-var range = function(x, y) {
+//Our output is going to be an array.
+//Base Case if x = y return an empty array.
+//We need a variable set to an empty array.
+//Recursive Case - We want x to eventually equal y.
+  //We will subtract from x if x is greater than y
+    //from each function call we want to push x-1 to the empty array.
+  //we will subtract for y if y is greater than x.
+    //From each function call we want to push x+1 to the empty array.
+/*var range = function(x, y) {
+  var results = [];
+  if(x === y){
+    return results;
+  }
+  if(x > y){
+    return results.push(x-1) + range(x-1, y);
+  }
+  if(x < y){
+    return results.push(x+1) + range(x, y-1);
+  }
 };
+*/
 
 // 7. Compute the exponent of a number.
 // The exponent of a number says how many times the base number is used as a factor.
 // 8^2 = 8 x 8 = 64.  Here, 8 is the base and 2 is the exponent.
 // Example:  exponent(4,3);  // 64
 // https://www.khanacademy.org/computing/computer-science/algorithms/recursive-algorithms/a/computing-powers-of-a-number
+//Base case - when exp = 0 return 1 and when exp = 1 return base
+//Recusive - On each call of the function we need the base to multiply itself, and exponent to decrease by 1
+//
 var exponent = function(base, exp) {
+  if(exp === 0){
+    return 1;
+  }
+  if(exp === 1){
+    return base;
+  }
+  if(exp > 1){
+    return (base * exponent(base, exp-1));
+  }
+  if(exp < 0){
+    return 1/(base * (exponent(base,-exp-1)));
+  }
+
 };
 
 // 8. Determine if a number is a power of two.
 // powerOfTwo(1); // true
 // powerOfTwo(16); // true
 // powerOfTwo(10); // false
+//Base Case - if n = 1 or 2 return true, if n = 0 return false.
+//Recursive Case - Call powerOfTwo function on n/2 until n equals one of our base cases
 var powerOfTwo = function(n) {
+  if(n === 0){
+    return false;
+  }
+  if(n > 0 && n < 1){
+    return false;
+  }
+  if(n > 1 && n < 2){
+    return false;
+  }
+  if(n === 1){
+    return true;
+  }
+  if(n === 2){
+    return true;
+  }
+  if(n > 2){
+    return powerOfTwo(n/2);
+  }
+
+ 
 };
 
 // 9. Write a function that accepts a string a reverses it.
+//Base Case if the length of the string is 1 then return string.
+//Recursive Case - return the last letter of the string on each function call
+  //And then recursively call the function with the string minus the last letter.
 var reverse = function(string) {
+  if(string.length-1 === 0){
+    return string;
+  }else{
+    return string.slice(string.length-1) + reverse(string.slice(0,string.length-1));
+  }
+
 };
 
 // 10. Write a function that determines if a string is a palindrome.
@@ -78,7 +192,22 @@ var divide = function(x, y) {
 // Example:  gcd(4,36);  // 4
 // http://www.cse.wustl.edu/~kjg/cse131/Notes/Recursion/recursion.html
 // https://www.khanacademy.org/computing/computer-science/cryptography/modarithmetic/a/the-euclidean-algorithm
+//Base Case - If x equals 0 we return y, if y = 0 we return x.
+//Recursive Case = recursively call gcd(y, (remainder of x and y)) until x or y equals zero.
 var gcd = function(x, y) {
+  var z = x % y;
+  if(x === 0){
+    return y;
+  }
+  if(y === 0){
+    return x;
+  }
+  if(x < 0 || y < 0){
+    return null;
+  }
+  else{
+    return gcd(y, z);
+  }
 };
 
 // 15. Write a function that compares each character of two strings and returns true if
@@ -86,7 +215,20 @@ var gcd = function(x, y) {
 // compareStr('house', 'houses') // false
 // compareStr('', '') // true
 // compareStr('tomato', 'tomato') // true
+//Base Case if str1 equals str2 exactly then return true.
+  //if str1 doesnt equal str2 return false.
+  //if str1 length doesn't equal str2 length return false.
+//Recursive Case = check each character one by one, recursively calling comparestr
+  //to test the next character.
 var compareStr = function(str1, str2) {
+  if(str1[0]!== str2[0]){
+    return false;
+  }
+  if(str1 === str2){
+    return true;
+  }else{
+    return compareStr(str1.slice(0, str1.length-1), str2.slice(0,str2.length-1));
+  }
 };
 
 // 16. Write a function that accepts a string and creates an array where each letter
